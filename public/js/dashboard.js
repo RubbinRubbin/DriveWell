@@ -209,7 +209,7 @@ function displayResults(profile) {
     const premiumValue = document.getElementById('premiumValue');
     premiumValue.textContent = `${premiumSign}${premiumChange}%`;
     premiumValue.className = `text-2xl font-bold ${premiumChange < 0 ? 'text-green-600' : 'text-red-600'}`;
-    document.getElementById('premiumDetail').textContent = `Multiplier: ${profile.premiumModifier.toFixed(2)}`;
+    document.getElementById('premiumDetail').textContent = `Moltiplicatore: ${profile.premiumModifier.toFixed(2)}`;
 
     // Competency Areas
     displayCompetencyAreas(profile.competencyScores);
@@ -285,22 +285,22 @@ function displayCompetencyAreas(areas) {
 
     const areaConfig = {
         safety: {
-            name: 'Safety',
+            name: 'Sicurezza',
             icon: 'bi-shield-fill-check',
             color: 'red'
         },
         efficiency: {
-            name: 'Efficiency',
+            name: 'Efficienza',
             icon: 'bi-lightning-fill',
             color: 'green'
         },
         behavior: {
-            name: 'Behavior',
+            name: 'Comportamento',
             icon: 'bi-person-check-fill',
             color: 'blue'
         },
         experience: {
-            name: 'Experience',
+            name: 'Esperienza',
             icon: 'bi-trophy-fill',
             color: 'amber'
         }
@@ -347,8 +347,8 @@ function displayRecommendations(recommendations) {
         list.innerHTML = `
             <div class="text-center py-8">
                 <i class="bi bi-check-circle-fill text-5xl text-green-500 mb-3"></i>
-                <p class="text-lg font-semibold text-gray-900">Excellent Performance!</p>
-                <p class="text-gray-600">No recommendations - keep up the great driving!</p>
+                <p class="text-lg font-semibold text-gray-900">Performance Eccellente!</p>
+                <p class="text-gray-600">Nessuna raccomandazione - continua così!</p>
             </div>
         `;
         return;
@@ -399,11 +399,11 @@ function displayRecommendations(recommendations) {
 // Formatta risk level
 function formatRiskLevel(level) {
     const levels = {
-        'very-low': 'Very Low',
-        'low': 'Low',
-        'moderate': 'Moderate',
-        'high': 'High',
-        'very-high': 'Very High'
+        'very-low': 'Molto Basso',
+        'low': 'Basso',
+        'moderate': 'Moderato',
+        'high': 'Alto',
+        'very-high': 'Molto Alto'
     };
     return levels[level] || level;
 }
@@ -411,21 +411,21 @@ function formatRiskLevel(level) {
 // Formatta parameter ID
 function formatParameterId(id) {
     const names = {
-        harsh_braking: 'Harsh Braking',
-        harsh_acceleration: 'Harsh Accel.',
-        speeding_violations: 'Speeding',
-        speeding_magnitude: 'Speed Excess',
-        smooth_acceleration: 'Smooth Accel.',
-        idling_time: 'Idling',
-        optimal_gear_usage: 'Gear Usage',
-        fuel_efficiency: 'Fuel Eff.',
-        night_driving: 'Night Drive',
-        weekend_driving: 'Weekend Drive',
-        phone_usage: 'Phone Use',
-        fatigue_indicators: 'Fatigue',
-        total_mileage: 'Mileage',
-        years_license: 'Experience',
-        route_variety: 'Route Variety'
+        harsh_braking: 'Frenate Brusche',
+        harsh_acceleration: 'Accel. Brusche',
+        speeding_violations: 'Eccessi Velocità',
+        speeding_magnitude: 'Entità Eccesso',
+        smooth_acceleration: 'Accel. Fluida',
+        idling_time: 'Tempo al Minimo',
+        optimal_gear_usage: 'Uso Marce',
+        fuel_efficiency: 'Eff. Carburante',
+        night_driving: 'Guida Notturna',
+        weekend_driving: 'Guida Weekend',
+        phone_usage: 'Uso Telefono',
+        fatigue_indicators: 'Affaticamento',
+        total_mileage: 'Chilometraggio',
+        years_license: 'Esperienza',
+        route_variety: 'Varietà Percorsi'
     };
     return names[id] || id;
 }
@@ -533,11 +533,11 @@ async function sendMessage(event) {
             currentSessionId = result.data.sessionId;
             appendChatMessage('assistant', result.data.response);
         } else {
-            appendChatMessage('assistant', 'Sorry, I encountered an error. Please try again.');
+            appendChatMessage('assistant', 'Mi dispiace, ho riscontrato un errore. Riprova per favore.');
         }
     } catch (error) {
         console.error('Chat error:', error);
-        appendChatMessage('assistant', 'Sorry, I\'m having trouble connecting. Please check that the server is running and OpenAI API key is configured.');
+        appendChatMessage('assistant', 'Mi dispiace, sto avendo problemi di connessione. Verifica che il server sia avviato e che la chiave API di OpenAI sia configurata.');
     } finally {
         document.getElementById('typingIndicator').classList.add('hidden');
     }

@@ -70,12 +70,12 @@
                     <i class="bi bi-speedometer2 text-3xl text-blue-600"></i>
                     <div>
                         <h1 class="text-2xl font-bold text-gray-900">DriveWell</h1>
-                        <p class="text-sm text-gray-500">Insurance Risk Assessment</p>
+                        <p class="text-sm text-gray-500">Valutazione del Rischio Assicurativo</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2 text-sm text-gray-600">
                     <i class="bi bi-circle-fill text-green-500 text-xs"></i>
-                    <span>API Online</span>
+                    <span>API Attiva</span>
                 </div>
             </div>
         </div>
@@ -90,24 +90,24 @@
                 <div class="bg-white rounded-xl shadow-sm p-6 space-y-6">
                     <!-- Test Profiles -->
                     <div>
-                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Test Profiles</h2>
+                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Profili di Test</h2>
                         <div class="space-y-3">
                             <button onclick="loadExcellentDriver()"
                                     class="w-full flex items-center space-x-3 p-3 rounded-lg bg-green-50 hover:bg-green-100 transition-all border border-green-200 hover:border-green-300">
                                 <i class="bi bi-star-fill text-green-600 text-xl"></i>
-                                <span class="text-sm font-medium text-gray-900">Excellent Driver</span>
+                                <span class="text-sm font-medium text-gray-900">Guidatore Eccellente</span>
                             </button>
 
                             <button onclick="loadModerateDriver()"
                                     class="w-full flex items-center space-x-3 p-3 rounded-lg bg-blue-50 hover:bg-blue-100 transition-all border border-blue-200 hover:border-blue-300">
                                 <i class="bi bi-person-fill text-blue-600 text-xl"></i>
-                                <span class="text-sm font-medium text-gray-900">Moderate Driver</span>
+                                <span class="text-sm font-medium text-gray-900">Guidatore Moderato</span>
                             </button>
 
                             <button onclick="loadHighRiskDriver()"
                                     class="w-full flex items-center space-x-3 p-3 rounded-lg bg-red-50 hover:bg-red-100 transition-all border border-red-200 hover:border-red-300">
                                 <i class="bi bi-exclamation-triangle-fill text-red-600 text-xl"></i>
-                                <span class="text-sm font-medium text-gray-900">High Risk Driver</span>
+                                <span class="text-sm font-medium text-gray-900">Guidatore ad Alto Rischio</span>
                             </button>
                         </div>
                     </div>
@@ -117,23 +117,12 @@
 
                     <!-- Custom Input -->
                     <div>
-                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Custom Data</h2>
+                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Dati Personalizzati</h2>
                         <button onclick="toggleCustomForm()"
                                 class="w-full flex items-center justify-center space-x-2 p-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all border border-gray-300">
                             <i class="bi bi-sliders text-gray-700"></i>
-                            <span class="text-sm font-medium text-gray-900">Customize Parameters</span>
+                            <span class="text-sm font-medium text-gray-900">Personalizza Parametri</span>
                         </button>
-                    </div>
-
-                    <!-- Info Card -->
-                    <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                        <div class="flex space-x-2">
-                            <i class="bi bi-info-circle-fill text-blue-600"></i>
-                            <div class="text-xs text-gray-700">
-                                <p class="font-medium mb-1">No API Key Required</p>
-                                <p class="text-gray-600">Select a profile to start the risk assessment</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </aside>
@@ -144,15 +133,15 @@
                 <!-- Welcome Message -->
                 <div id="welcomeMessage" class="bg-white rounded-xl shadow-sm p-12 text-center">
                     <i class="bi bi-speedometer2 text-6xl text-gray-300 mb-4"></i>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome to DriveWell</h2>
-                    <p class="text-gray-600">Select a test profile or customize parameters to start your risk assessment</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Benvenuto in DriveWell</h2>
+                    <p class="text-gray-600">Seleziona un profilo di test o personalizza i parametri per iniziare la valutazione del rischio</p>
                 </div>
 
                 <!-- Custom Form (Hidden by default) -->
                 <div id="customForm" class="hidden space-y-6">
                     <div class="bg-white rounded-xl shadow-sm p-6">
                         <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-xl font-bold text-gray-900">Customize Driving Parameters</h2>
+                            <h2 class="text-xl font-bold text-gray-900">Personalizza Parametri di Guida</h2>
                             <button onclick="toggleCustomForm()" class="text-gray-400 hover:text-gray-600">
                                 <i class="bi bi-x-lg text-xl"></i>
                             </button>
@@ -163,25 +152,25 @@
                             <div class="space-y-4">
                                 <div class="flex items-center space-x-2 mb-4">
                                     <i class="bi bi-shield-fill-check text-red-600"></i>
-                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Safety</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Sicurezza</h3>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Harsh Braking (events/100km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Frenate Brusche (eventi/100km)</label>
                                     <input type="number" id="harsh_braking" step="0.1" value="0.3"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Harsh Acceleration (events/100km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Accelerazioni Brusche (eventi/100km)</label>
                                     <input type="number" id="harsh_acceleration" step="0.1" value="0.8"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Speeding Violations (events/100km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Violazioni Velocità (eventi/100km)</label>
                                     <input type="number" id="speeding_violations" step="0.1" value="0.1"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Speeding Magnitude (km/h)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Eccesso di Velocità Medio (km/h)</label>
                                     <input type="number" id="speeding_magnitude" step="0.1" value="2.5"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
@@ -191,25 +180,25 @@
                             <div class="space-y-4">
                                 <div class="flex items-center space-x-2 mb-4">
                                     <i class="bi bi-lightning-fill text-green-600"></i>
-                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Efficiency</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Efficienza</h3>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Smooth Acceleration (%)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Accelerazione Fluida (%)</label>
                                     <input type="number" id="smooth_acceleration" min="0" max="100" value="92"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Idling Time (%)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tempo al Minimo (%)</label>
                                     <input type="number" id="idling_time" min="0" max="100" value="4"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Optimal Gear Usage (%)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Uso Marcia Ottimale (%)</label>
                                     <input type="number" id="optimal_gear" min="0" max="100" value="88"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fuel Efficiency (0-100)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Efficienza Carburante (0-100)</label>
                                     <input type="number" id="fuel_efficiency" min="0" max="100" value="87"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
@@ -219,25 +208,25 @@
                             <div class="space-y-4">
                                 <div class="flex items-center space-x-2 mb-4">
                                     <i class="bi bi-person-check-fill text-blue-600"></i>
-                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Behavior</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Comportamento</h3>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Night Driving (%)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Guida Notturna (%)</label>
                                     <input type="number" id="night_driving" min="0" max="100" value="8"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Weekend Driving (%)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Guida nel Weekend (%)</label>
                                     <input type="number" id="weekend_driving" min="0" max="100" value="28"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Usage (events/100km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Uso Telefono (eventi/100km)</label>
                                     <input type="number" id="phone_usage" step="0.1" value="0.05"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Fatigue Indicators (events/100km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Indicatori di Affaticamento (eventi/100km)</label>
                                     <input type="number" id="fatigue" step="0.1" value="0.1"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
@@ -247,20 +236,20 @@
                             <div class="space-y-4">
                                 <div class="flex items-center space-x-2 mb-4">
                                     <i class="bi bi-trophy-fill text-amber-600"></i>
-                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Experience</h3>
+                                    <h3 class="text-sm font-semibold text-gray-700 uppercase">Esperienza</h3>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Total Mileage (km)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Chilometraggio Totale (km)</label>
                                     <input type="number" id="total_mileage" value="120000"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Years with License</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Anni con Patente</label>
                                     <input type="number" id="years_license" value="12"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Route Variety (0-100)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Varietà Percorsi (0-100)</label>
                                     <input type="number" id="route_variety" min="0" max="100" value="75"
                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
@@ -270,7 +259,7 @@
                         <button onclick="submitCustomData()"
                                 class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-all shadow-sm hover:shadow-md">
                             <i class="bi bi-calculator mr-2"></i>
-                            Calculate Profile
+                            Calcola Profilo
                         </button>
                     </div>
                 </div>
@@ -279,7 +268,7 @@
                 <div id="loading" class="hidden bg-white rounded-xl shadow-sm p-12">
                     <div class="flex flex-col items-center justify-center">
                         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-                        <p class="text-gray-600">Analyzing driving data...</p>
+                        <p class="text-gray-600">Analisi dati di guida in corso...</p>
                     </div>
                 </div>
 
@@ -293,7 +282,7 @@
                                 <div class="score-ring mb-4" id="scoreRing">
                                     <div class="relative z-10 text-center">
                                         <div id="overallScore" class="text-4xl font-bold text-gray-900">0</div>
-                                        <div class="text-sm text-gray-500">Overall Score</div>
+                                        <div class="text-sm text-gray-500">Punteggio Totale</div>
                                     </div>
                                 </div>
                                 <div id="gradeBadge" class="text-5xl font-bold text-blue-600">-</div>
@@ -305,7 +294,7 @@
                             <div class="bg-white rounded-xl shadow-sm p-6">
                                 <div class="flex items-center space-x-2 mb-3">
                                     <i class="bi bi-shield-exclamation text-gray-400"></i>
-                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Risk Level</h3>
+                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Livello di Rischio</h3>
                                 </div>
                                 <div id="riskBadge" class="text-2xl font-bold">-</div>
                             </div>
@@ -313,7 +302,7 @@
                             <div class="bg-white rounded-xl shadow-sm p-6">
                                 <div class="flex items-center space-x-2 mb-3">
                                     <i class="bi bi-wallet2 text-gray-400"></i>
-                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Premium Impact</h3>
+                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Impatto sul Premio</h3>
                                 </div>
                                 <div id="premiumValue" class="text-2xl font-bold">-</div>
                                 <div id="premiumDetail" class="text-sm text-gray-500 mt-1">-</div>
@@ -323,7 +312,7 @@
 
                     <!-- Competency Areas -->
                     <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-6">Competency Areas</h2>
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Aree di Competenza</h2>
                         <div id="competencyGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Populated dynamically -->
                         </div>
@@ -331,7 +320,7 @@
 
                     <!-- Recommendations -->
                     <div class="bg-white rounded-xl shadow-sm p-6">
-                        <h2 class="text-lg font-bold text-gray-900 mb-6">Recommendations</h2>
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Raccomandazioni</h2>
                         <div id="recommendationsList" class="space-y-3">
                             <!-- Populated dynamically -->
                         </div>
@@ -360,8 +349,8 @@
             <div class="flex items-center space-x-3">
                 <i class="bi bi-robot text-3xl"></i>
                 <div>
-                    <h3 class="font-bold text-lg">AI Driving Coach</h3>
-                    <p class="text-xs text-blue-100">Personalized insights & advice</p>
+                    <h3 class="font-bold text-lg">AI Coach di Guida</h3>
+                    <p class="text-xs text-blue-100">Consigli personalizzati</p>
                 </div>
             </div>
             <button onclick="toggleChat()" class="text-white hover:text-gray-200 transition-colors">
@@ -377,8 +366,8 @@
                     <div class="flex items-start space-x-2">
                         <i class="bi bi-robot text-blue-600 text-lg mt-1"></i>
                         <div class="text-sm text-gray-800">
-                            <p class="font-semibold text-blue-600 mb-1">Welcome!</p>
-                            <p>I'm your AI Driving Coach. I can help you understand your driving behavior and improve your insurance premium. Ask me anything!</p>
+                            <p class="font-semibold text-blue-600 mb-1">Benvenuto!</p>
+                            <p>Sono il tuo AI Coach di Guida. Posso aiutarti a comprendere il tuo comportamento al volante e migliorare il tuo premio assicurativo. Chiedimi pure!</p>
                         </div>
                     </div>
                 </div>
@@ -393,7 +382,7 @@
                     <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
                     <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
                 </div>
-                <span class="text-sm">Coach is thinking...</span>
+                <span class="text-sm">Il coach sta pensando...</span>
             </div>
         </div>
 
@@ -402,7 +391,7 @@
             <form onsubmit="sendMessage(event)" class="flex space-x-2">
                 <input type="text"
                        id="chatInput"
-                       placeholder="Ask about your driving..."
+                       placeholder="Chiedi informazioni sulla tua guida..."
                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                        autocomplete="off">
                 <button type="submit"
@@ -413,17 +402,17 @@
 
             <!-- Quick Actions -->
             <div class="flex flex-wrap gap-2 mt-3">
-                <button onclick="sendQuickMessage('Why is my score low?')"
+                <button onclick="sendQuickMessage('Perché il mio punteggio è basso?')"
                         class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
-                    Why is my score low?
+                    Perché il mio punteggio è basso?
                 </button>
-                <button onclick="sendQuickMessage('How can I improve?')"
+                <button onclick="sendQuickMessage('Come posso migliorare?')"
                         class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
-                    How can I improve?
+                    Come posso migliorare?
                 </button>
-                <button onclick="sendQuickMessage('What should I focus on?')"
+                <button onclick="sendQuickMessage('Su cosa devo concentrarmi?')"
                         class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
-                    What to focus on?
+                    Su cosa concentrarmi?
                 </button>
             </div>
         </div>
