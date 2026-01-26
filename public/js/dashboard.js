@@ -247,35 +247,35 @@ function animateScore(targetScore) {
 
 // Ottieni colore basato su score
 function getScoreColor(score) {
-    if (score >= 90) return '#10b981'; // green
-    if (score >= 80) return '#3b82f6'; // blue
-    if (score >= 70) return '#f59e0b'; // amber
-    if (score >= 60) return '#ef4444'; // red
+    if (score >= 90) return '#0f766e'; // teal
+    if (score >= 80) return '#0369a1'; // sky blue
+    if (score >= 70) return '#d97706'; // amber
+    if (score >= 60) return '#dc2626'; // red
     return '#991b1b'; // dark red
 }
 
 // Ottieni colore grade
 function getGradeColor(grade) {
     const colors = {
-        'A': 'text-green-600',
-        'B': 'text-blue-600',
-        'C': 'text-amber-600',
-        'D': 'text-red-600',
-        'F': 'text-red-800'
+        'A': 'text-teal-700',
+        'B': 'text-sky-700',
+        'C': 'text-amber-700',
+        'D': 'text-red-700',
+        'F': 'text-red-900'
     };
-    return colors[grade] || 'text-gray-600';
+    return colors[grade] || 'text-gray-700';
 }
 
 // Ottieni colore risk
 function getRiskColor(level) {
     const colors = {
-        'very-low': 'text-green-600',
-        'low': 'text-blue-600',
-        'moderate': 'text-amber-600',
-        'high': 'text-red-600',
-        'very-high': 'text-red-800'
+        'very-low': 'text-teal-700',
+        'low': 'text-sky-700',
+        'moderate': 'text-amber-700',
+        'high': 'text-red-700',
+        'very-high': 'text-red-900'
     };
-    return colors[level] || 'text-gray-600';
+    return colors[level] || 'text-gray-700';
 }
 
 // Mostra aree di competenza
@@ -557,7 +557,7 @@ function appendChatMessage(role, content, animate = true) {
     if (role === 'user') {
         messageDiv.className = `flex justify-end ${animate ? 'animate-fade-in' : ''}`;
         messageDiv.innerHTML = `
-            <div class="bg-blue-600 text-white rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
+            <div class="bg-slate-700 text-white rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
                 <p class="text-sm">${escapeHtml(content)}</p>
             </div>
         `;
@@ -566,7 +566,9 @@ function appendChatMessage(role, content, animate = true) {
         messageDiv.innerHTML = `
             <div class="bg-white border border-gray-200 rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
                 <div class="flex items-start space-x-2">
-                    <i class="bi bi-robot text-blue-600 text-lg mt-1"></i>
+                    <div class="bg-slate-100 rounded-full p-1.5 mt-0.5 flex-shrink-0">
+                        <i class="bi bi-car-front-fill text-slate-700 text-sm"></i>
+                    </div>
                     <div class="text-sm text-gray-800">${formatMarkdown(content)}</div>
                 </div>
             </div>
