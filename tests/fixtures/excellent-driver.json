@@ -1,0 +1,26 @@
+{
+  "driverId": "DR-2024-001",
+  "analysisWindow": {
+    "startDate": "2024-10-01T00:00:00Z",
+    "endDate": "2025-01-01T00:00:00Z",
+    "totalDistanceKm": 5000,
+    "totalDrivingHours": 120
+  },
+  "parameters": {
+    "harshBrakingEventsPerHundredKm": 0.3,
+    "harshAccelerationEventsPerHundredKm": 0.8,
+    "speedingViolationsPerHundredKm": 0.1,
+    "averageSpeedingMagnitudeKmh": 2.5,
+    "smoothAccelerationPercentage": 92,
+    "idlingTimePercentage": 4,
+    "optimalGearUsagePercentage": 88,
+    "fuelEfficiencyScore": 87,
+    "nightDrivingPercentage": 8,
+    "weekendDrivingPercentage": 28,
+    "phoneUsageEventsPerHundredKm": 0.05,
+    "fatigueIndicatorsPerHundredKm": 0.1,
+    "totalMileageDriven": 120000,
+    "yearsHoldingLicense": 12,
+    "routeVarietyScore": 75
+  }
+}
