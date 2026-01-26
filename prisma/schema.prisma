@@ -1,0 +1,119 @@
+// Prisma Schema for DriveWell AI Coach
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Driver Model
+model Driver {
+  id        String   @id
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  metadata  Json     @default("{}")
+
+  // Relations
+  assessments      Assessment[]
+  coachingSessions CoachingSession[]
+  coachingMessages CoachingMessage[]
+  patternInsights  PatternInsight[]
+
+  @@map("drivers")
+}
+
+// Assessment Model
+model Assessment {
+  id       String   @id @default(uuid())
+  driverId String   @map("driver_id")
+  driver   Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  timestamp DateTime @default(now())
+
+  // Analysis window
+  startDate          DateTime @map("start_date")
+  endDate            DateTime @map("end_date")
+  totalDistanceKm    Float    @map("total_distance_km")
+  totalDrivingHours  Float    @map("total_driving_hours")
+
+  // Scores
+  overallScore     Float  @map("overall_score")
+  overallGrade     String @map("overall_grade")
+  riskLevel        String @map("risk_level")
+  premiumModifier  Float  @map("premium_modifier")
+
+  // Raw parameters (JSONB for flexibility)
+  parameters Json
+
+  // Computed scores (JSONB)
+  competencyScores Json @map("competency_scores")
+
+  // Recommendations (JSONB array)
+  recommendations Json @default("[]")
+
+  @@index([driverId, timestamp(sort: Desc)], name: "idx_driver_timestamp")
+  @@index([driverId, startDate, endDate], name: "idx_driver_date_range")
+  @@map("assessments")
+}
+
+// Coaching Session Model
+model CoachingSession {
+  id        String   @id @default(uuid())
+  driverId  String   @map("driver_id")
+  driver    Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  isActive  Boolean  @default(true) @map("is_active")
+
+  // Relations
+  messages CoachingMessage[]
+
+  @@index([driverId, isActive], name: "idx_driver_active")
+  @@map("coaching_sessions")
+}
+
+// Coaching Message Model
+model CoachingMessage {
+  id        String   @id @default(uuid())
+  sessionId String   @map("session_id")
+  session   CoachingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  driverId  String   @map("driver_id")
+  driver    Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  role      String   // 'user' or 'assistant'
+  content   String
+  timestamp DateTime @default(now())
+
+  // AI context metadata
+  contextMetadata Json @default("{}") @map("context_metadata")
+
+  @@index([sessionId, timestamp(sort: Asc)], name: "idx_session_timestamp")
+  @@map("coaching_messages")
+}
+
+// Pattern Insight Model
+model PatternInsight {
+  id          String   @id @default(uuid())
+  driverId    String   @map("driver_id")
+  driver      Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  patternType String   @map("pattern_type") // 'recurring_harsh_braking', 'time_based', 'location_based', etc.
+
+  // Pattern details
+  description String
+  severity    String   // 'critical', 'high', 'medium', 'low'
+  frequency   Int
+
+  // Context (e.g., location, time of day, etc.)
+  context Json @default("{}")
+
+  // Dates
+  firstDetected DateTime @map("first_detected")
+  lastDetected  DateTime @map("last_detected")
+
+  // Is this pattern still active?
+  isActive Boolean @default(true) @map("is_active")
+
+  @@index([driverId, isActive], name: "idx_driver_pattern_active")
+  @@map("pattern_insights")
+}

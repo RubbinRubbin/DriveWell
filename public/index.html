@@ -342,6 +342,93 @@
         </div>
     </div>
 
+    <!-- AI Coach Chat Button -->
+    <div id="chatButton" class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChat()"
+                class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110">
+            <i class="bi bi-chat-dots-fill text-2xl"></i>
+            <span id="chatBadge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                !
+            </span>
+        </button>
+    </div>
+
+    <!-- AI Coach Chat Panel -->
+    <div id="chatPanel" class="fixed bottom-6 right-6 w-full max-w-md h-[600px] bg-white rounded-xl shadow-2xl z-50 hidden flex-col">
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-xl flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="bi bi-robot text-3xl"></i>
+                <div>
+                    <h3 class="font-bold text-lg">AI Driving Coach</h3>
+                    <p class="text-xs text-blue-100">Personalized insights & advice</p>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-white hover:text-gray-200 transition-colors">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            <!-- Welcome message -->
+            <div class="flex justify-start">
+                <div class="bg-white border border-gray-200 rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
+                    <div class="flex items-start space-x-2">
+                        <i class="bi bi-robot text-blue-600 text-lg mt-1"></i>
+                        <div class="text-sm text-gray-800">
+                            <p class="font-semibold text-blue-600 mb-1">Welcome!</p>
+                            <p>I'm your AI Driving Coach. I can help you understand your driving behavior and improve your insurance premium. Ask me anything!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="hidden px-4 py-2 bg-gray-50">
+            <div class="flex items-center space-x-2 text-gray-500">
+                <div class="flex space-x-1">
+                    <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                </div>
+                <span class="text-sm">Coach is thinking...</span>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="border-t border-gray-200 p-4 bg-white rounded-b-xl">
+            <form onsubmit="sendMessage(event)" class="flex space-x-2">
+                <input type="text"
+                       id="chatInput"
+                       placeholder="Ask about your driving..."
+                       class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                       autocomplete="off">
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg transition-all transform hover:scale-105">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+
+            <!-- Quick Actions -->
+            <div class="flex flex-wrap gap-2 mt-3">
+                <button onclick="sendQuickMessage('Why is my score low?')"
+                        class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
+                    Why is my score low?
+                </button>
+                <button onclick="sendQuickMessage('How can I improve?')"
+                        class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
+                    How can I improve?
+                </button>
+                <button onclick="sendQuickMessage('What should I focus on?')"
+                        class="text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-all border border-blue-200">
+                    What to focus on?
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="/js/dashboard.js"></script>
 </body>
 </html>

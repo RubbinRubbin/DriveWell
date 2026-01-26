@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
+import { PrismaClient } from '@prisma/client';
 import { DrivingDataInput } from '../models/driving-data.model';
 import { RiskAssessmentService } from '../services/risk-assessment.service';
+import { AssessmentRepositoryService } from '../services/database/assessment-repository.service';
 
 export class AssessmentController {
   private riskAssessmentService: RiskAssessmentService;
+  private assessmentRepository: AssessmentRepositoryService;
 
-  constructor() {
+  constructor(prisma: PrismaClient) {
     this.riskAssessmentService = new RiskAssessmentService();
+    this.assessmentRepository = new AssessmentRepositoryService(prisma);
   }
 
   createAssessment = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,6 +19,9 @@ export class AssessmentController {
 
       // Generate profile
       const profile = await this.riskAssessmentService.assessDriver(drivingData);
+
+      // Save to database (disabled for now - database not configured)
+      // await this.assessmentRepository.saveAssessment(profile);
 
       res.status(201).json({
         success: true,
@@ -25,36 +32,100 @@ export class AssessmentController {
     }
   };
 
-  // Placeholder for future implementation
   getLatestAssessment = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { driverId } = req.params;
 
-      // TODO: Implement database retrieval
+      const assessment = await this.assessmentRepository.getLatestAssessment(driverId);
+
+      if (!assessment) {
+        return res.status(404).json({
+          success: false,
+          error: { message: `No assessments found for driver ${driverId}` }
+        });
+      }
+
+      // Convert to DriverProfile format
+      const profile = this.assessmentRepository.convertToDriverProfile(assessment);
+
       res.status(200).json({
         success: true,
-        message: 'Not implemented yet - database layer needed',
-        driverId
+        data: profile
       });
     } catch (error) {
       next(error);
     }
   };
 
-  // Placeholder for future implementation
   getAssessmentHistory = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { driverId } = req.params;
       const limit = parseInt(req.query.limit as string) || 10;
       const offset = parseInt(req.query.offset as string) || 0;
 
-      // TODO: Implement database retrieval
-      res.status(200).json({
-        success: true,
-        message: 'Not implemented yet - database layer needed',
+      const assessments = await this.assessmentRepository.getDriverHistory(
         driverId,
         limit,
         offset
+      );
+
+      const total = await this.assessmentRepository.getAssessmentCount(driverId);
+
+      // Convert assessments to DriverProfile format
+      const profiles = assessments.map(assessment =>
+        this.assessmentRepository.convertToDriverProfile(assessment)
+      );
+
+      res.status(200).json({
+        success: true,
+        data: {
+          assessments: profiles,
+          pagination: {
+            total,
+            limit,
+            offset,
+            hasMore: offset + limit < total
+          }
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getTrends = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { driverId } = req.params;
+      const limit = parseInt(req.query.limit as string) || 20;
+
+      const assessments = await this.assessmentRepository.getDriverHistory(driverId, limit);
+
+      if (assessments.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: { message: `No assessments found for driver ${driverId}` }
+        });
+      }
+
+      // Extract trend data
+      const scoreOverTime = assessments.reverse().map(a => ({
+        date: a.timestamp.toISOString(),
+        score: Number(a.overallScore),
+        grade: a.overallGrade
+      }));
+
+      // Extract parameter trends from JSONB
+      const parameterTrends: any = {};
+
+      // For now, just return the score trend
+      // Pattern analysis service will provide more detailed trends
+
+      res.status(200).json({
+        success: true,
+        data: {
+          scoreOverTime,
+          parameterTrends
+        }
       });
     } catch (error) {
       next(error);

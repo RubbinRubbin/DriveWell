@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import { PrismaClient } from '@prisma/client';
 import { AssessmentController } from '../controllers/assessment.controller';
 import { validateDrivingData } from '../middleware/request-validator';
 
 export const assessmentRouter = Router();
-const controller = new AssessmentController();
+const prisma = new PrismaClient();
+const controller = new AssessmentController(prisma);
 
 /**
  * POST /api/v1/assessments
@@ -22,6 +24,12 @@ assessmentRouter.get('/:driverId/latest', controller.getLatestAssessment);
  * Get assessment history for a driver
  */
 assessmentRouter.get('/:driverId/history', controller.getAssessmentHistory);
+
+/**
+ * GET /api/v1/assessments/:driverId/trends
+ * Get score trends over time for a driver
+ */
+assessmentRouter.get('/:driverId/trends', controller.getTrends);
 
 /**
  * POST /api/v1/assessments/simulate

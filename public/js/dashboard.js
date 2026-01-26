@@ -429,3 +429,209 @@ function formatParameterId(id) {
     };
     return names[id] || id;
 }
+
+// ========================================
+// AI COACH CHAT FUNCTIONALITY
+// ========================================
+
+// Chat state
+let currentSessionId = null;
+let currentDriverId = null;
+let lastDrivingData = null;
+
+// Toggle chat panel
+function toggleChat() {
+    const panel = document.getElementById('chatPanel');
+    const button = document.getElementById('chatButton');
+
+    if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
+        panel.classList.add('flex');
+        button.classList.add('hidden');
+        loadChatHistory();
+    } else {
+        panel.classList.add('hidden');
+        panel.classList.remove('flex');
+        button.classList.remove('hidden');
+    }
+}
+
+// Load chat history
+async function loadChatHistory() {
+    if (!currentDriverId) {
+        console.log('No driver ID set yet');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/coach/sessions/${currentDriverId}/active`);
+        const result = await response.json();
+
+        if (result.success && result.data.messages.length > 0) {
+            currentSessionId = result.data.sessionId;
+            // Clear chat except welcome message
+            const chatMessages = document.getElementById('chatMessages');
+            const welcomeMessage = chatMessages.querySelector('.flex.justify-start');
+            chatMessages.innerHTML = '';
+            if (welcomeMessage) {
+                chatMessages.appendChild(welcomeMessage);
+            }
+            // Render history
+            result.data.messages.forEach(msg => {
+                appendChatMessage(msg.role, msg.content, false);
+            });
+        }
+    } catch (error) {
+        console.error('Failed to load chat history:', error);
+    }
+}
+
+// Send message
+async function sendMessage(event) {
+    event.preventDefault();
+
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    // For testing without driver data, use a default ID
+    if (!currentDriverId) {
+        currentDriverId = 'test-driver-001';
+    }
+
+    // Clear input
+    input.value = '';
+
+    // Show user message
+    appendChatMessage('user', message);
+
+    // Show typing indicator
+    document.getElementById('typingIndicator').classList.remove('hidden');
+
+    try {
+        const requestBody = {
+            driverId: currentDriverId,
+            message: message,
+            sessionId: currentSessionId
+        };
+
+        // Include driving data if available
+        if (lastDrivingData) {
+            requestBody.drivingData = lastDrivingData;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/coach/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            currentSessionId = result.data.sessionId;
+            appendChatMessage('assistant', result.data.response);
+        } else {
+            appendChatMessage('assistant', 'Sorry, I encountered an error. Please try again.');
+        }
+    } catch (error) {
+        console.error('Chat error:', error);
+        appendChatMessage('assistant', 'Sorry, I\'m having trouble connecting. Please check that the server is running and OpenAI API key is configured.');
+    } finally {
+        document.getElementById('typingIndicator').classList.add('hidden');
+    }
+}
+
+// Quick message
+function sendQuickMessage(message) {
+    document.getElementById('chatInput').value = message;
+    sendMessage(new Event('submit'));
+}
+
+// Append chat message
+function appendChatMessage(role, content, animate = true) {
+    const container = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+
+    if (role === 'user') {
+        messageDiv.className = `flex justify-end ${animate ? 'animate-fade-in' : ''}`;
+        messageDiv.innerHTML = `
+            <div class="bg-blue-600 text-white rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
+                <p class="text-sm">${escapeHtml(content)}</p>
+            </div>
+        `;
+    } else {
+        messageDiv.className = `flex justify-start ${animate ? 'animate-fade-in' : ''}`;
+        messageDiv.innerHTML = `
+            <div class="bg-white border border-gray-200 rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
+                <div class="flex items-start space-x-2">
+                    <i class="bi bi-robot text-blue-600 text-lg mt-1"></i>
+                    <div class="text-sm text-gray-800">${formatMarkdown(content)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    container.appendChild(messageDiv);
+    scrollChatToBottom();
+}
+
+// Format markdown (simple version - handles **bold** and bullet points)
+function formatMarkdown(text) {
+    // Escape HTML first
+    let formatted = escapeHtml(text);
+
+    // Bold text
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    // Line breaks
+    formatted = formatted.replace(/\n/g, '<br>');
+
+    // Bullet points
+    formatted = formatted.replace(/^- (.*?)(<br>|$)/gm, '• $1$2');
+
+    return formatted;
+}
+
+// Scroll chat to bottom
+function scrollChatToBottom() {
+    const container = document.getElementById('chatMessages');
+    setTimeout(() => {
+        container.scrollTop = container.scrollHeight;
+    }, 100);
+}
+
+// Escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Update assessDriver function to set currentDriverId and save last driving data
+const originalAssessDriver = assessDriver;
+assessDriver = function(drivingData) {
+    currentDriverId = drivingData.driverId;
+    lastDrivingData = drivingData;
+    return originalAssessDriver(drivingData);
+};
+
+// Add CSS animation for fade-in
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in {
+        animation: fade-in 0.3s ease-out;
+    }
+`;
+document.head.appendChild(style);
