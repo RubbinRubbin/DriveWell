@@ -11,8 +11,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.CRITICAL,
     template: {
-      issue: 'Excessive harsh braking detected (${value} events/100km)',
-      advice: 'Increase following distance and anticipate traffic flow. Practice smooth, gradual braking by observing traffic ahead.'
+      issue: 'Frenate brusche eccessive rilevate (${value} eventi/100km)',
+      advice: 'Aumenta la distanza di sicurezza e anticipa il flusso del traffico. Pratica frenate fluide e graduali osservando il traffico davanti a te.'
     },
     impact: {
       scoreImprovement: 8,
@@ -28,8 +28,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.CRITICAL,
     template: {
-      issue: 'Frequent speeding violations (${value} events/100km)',
-      advice: 'Strictly adhere to speed limits. Use cruise control on highways and enable speed limit alerts if available.'
+      issue: 'Violazioni di velocità frequenti (${value} eventi/100km)',
+      advice: 'Rispetta rigorosamente i limiti di velocità. Usa il cruise control in autostrada e attiva gli avvisi dei limiti di velocità se disponibili.'
     },
     impact: {
       scoreImprovement: 12,
@@ -45,8 +45,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.CRITICAL,
     template: {
-      issue: 'Phone usage while driving detected (${value} events/100km)',
-      advice: 'Enable Do Not Disturb mode while driving. Use hands-free systems for essential calls only.'
+      issue: 'Uso del telefono durante la guida rilevato (${value} eventi/100km)',
+      advice: 'Attiva la modalità Non Disturbare durante la guida. Usa sistemi vivavoce solo per chiamate essenziali.'
     },
     impact: {
       scoreImprovement: 10,
@@ -62,8 +62,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.HIGH,
     template: {
-      issue: 'High harsh acceleration events (${value} events/100km)',
-      advice: 'Practice gradual acceleration. Anticipate speed changes and accelerate smoothly over 5-7 seconds.'
+      issue: 'Accelerazioni brusche elevate (${value} eventi/100km)',
+      advice: 'Pratica accelerazioni graduali. Anticipa i cambi di velocità e accelera dolcemente nell\'arco di 5-7 secondi.'
     },
     impact: {
       scoreImprovement: 6,
@@ -81,8 +81,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.MEDIUM,
     template: {
-      issue: 'High idling time detected (${value}% of driving time)',
-      advice: 'Turn off engine when stopped for more than 30 seconds. Plan routes to minimize traffic congestion.'
+      issue: 'Tempo al minimo elevato rilevato (${value}% del tempo di guida)',
+      advice: 'Spegni il motore quando sei fermo per più di 30 secondi. Pianifica percorsi per ridurre al minimo il traffico congestionato.'
     },
     impact: {
       scoreImprovement: 5,
@@ -98,8 +98,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.MEDIUM,
     template: {
-      issue: 'Low smooth acceleration rate (${value}%)',
-      advice: 'Practice gradual acceleration. Aim to reach desired speed smoothly over 5-7 seconds.'
+      issue: 'Tasso di accelerazione fluida basso (${value}%)',
+      advice: 'Pratica accelerazioni graduali. Mira a raggiungere la velocità desiderata in modo fluido nell\'arco di 5-7 secondi.'
     },
     impact: {
       scoreImprovement: 6,
@@ -115,8 +115,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.MEDIUM,
     template: {
-      issue: 'Low fuel efficiency score (${value})',
-      advice: 'Maintain steady speeds, avoid rapid acceleration, and ensure regular vehicle maintenance.'
+      issue: 'Punteggio di efficienza carburante basso (${value})',
+      advice: 'Mantieni velocità costanti, evita accelerazioni brusche e assicurati di effettuare la manutenzione regolare del veicolo.'
     },
     impact: {
       scoreImprovement: 4,
@@ -134,8 +134,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.MEDIUM,
     template: {
-      issue: 'High percentage of night driving (${value}%)',
-      advice: 'When possible, schedule trips during daylight hours. Ensure proper rest before night driving.'
+      issue: 'Percentuale elevata di guida notturna (${value}%)',
+      advice: 'Quando possibile, programma i viaggi durante le ore diurne. Assicurati di riposare adeguatamente prima di guidare di notte.'
     },
     impact: {
       scoreImprovement: 4,
@@ -151,8 +151,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.HIGH,
     template: {
-      issue: 'Fatigue indicators detected (${value} events/100km)',
-      advice: 'Take regular breaks every 2 hours. Avoid driving when tired. Get adequate sleep before long trips.'
+      issue: 'Indicatori di affaticamento rilevati (${value} eventi/100km)',
+      advice: 'Fai pause regolari ogni 2 ore. Evita di guidare quando sei stanco. Dormi adeguatamente prima di viaggi lunghi.'
     },
     impact: {
       scoreImprovement: 7,
@@ -170,8 +170,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.LOW,
     template: {
-      issue: 'Limited driving experience (${value} years)',
-      advice: 'Consider advanced driving courses. Gradually increase exposure to varied driving conditions.'
+      issue: 'Esperienza di guida limitata (${value} anni)',
+      advice: 'Valuta corsi di guida avanzata. Aumenta gradualmente l\'esposizione a condizioni di guida varie.'
     },
     impact: {
       scoreImprovement: 3,
@@ -187,8 +187,8 @@ export const RECOMMENDATION_RULES: RecommendationRule[] = [
     },
     priority: RecommendationPriority.LOW,
     template: {
-      issue: 'Low route variety (${value} score)',
-      advice: 'Gain experience in diverse driving conditions to build comprehensive driving skills.'
+      issue: 'Varietà di percorsi bassa (${value} punteggio)',
+      advice: 'Acquisisci esperienza in condizioni di guida diverse per sviluppare competenze di guida complete.'
     },
     impact: {
       scoreImprovement: 2,
