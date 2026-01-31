@@ -1,21 +1,21 @@
-# 🚗 DriveWell - Sistema Intelligente di Valutazione del Rischio Assicurativo
+# DriveWell - Sistema Intelligente di Valutazione del Rischio Assicurativo
 
 > Piattaforma avanzata di risk assessment per compagnie assicurative con AI Coach integrato per guidatori
 
 DriveWell è un sistema completo di valutazione del rischio assicurativo che combina analisi avanzata dei dati di guida con intelligenza artificiale conversazionale. Analizza 15 parametri di guida, genera profili di rischio dettagliati e fornisce coaching personalizzato attraverso un'interfaccia AI powered by GPT-4.
 
-## 🎯 Caratteristiche Principali
+## Caratteristiche Principali
 
 ### Core Features
-- **📊 Analisi Completa**: 15 parametri di guida raggruppati in 4 aree di competenza (Sicurezza, Efficienza, Comportamento, Esperienza)
-- **🤖 AI Driving Coach**: Assistente conversazionale basato su OpenAI GPT-4 per consulenza personalizzata
-- **📈 Scoring Trasparente**: Algoritmo configurabile basato su soglie e pesi personalizzabili
-- **💡 Raccomandazioni Intelligenti**: Consigli azionabili con stima impatto su punteggio e premio
-- **🎨 Dashboard Interattivo**: Frontend professionale con stile corporate banking/insurance
-- **💬 Chat Persistente**: Sistema di sessioni chat con storico conversazioni
-- **🌐 Completamente Localizzato**: Interfaccia e AI rispondono in italiano
-- **🔒 Type-Safe**: Implementazione completa in TypeScript
-- **🗄️ Database Persistente**: PostgreSQL con Prisma ORM per storico valutazioni e sessioni AI
+- ** Analisi Completa**: 15 parametri di guida raggruppati in 4 aree di competenza (Sicurezza, Efficienza, Comportamento, Esperienza)
+- ** AI Driving Coach**: Assistente conversazionale basato su OpenAI GPT-4 per consulenza personalizzata
+- ** Scoring Trasparente**: Algoritmo configurabile basato su soglie e pesi personalizzabili
+- ** Raccomandazioni Intelligenti**: Consigli azionabili con stima impatto su punteggio e premio
+- ** Dashboard Interattivo**: Frontend professionale con stile corporate banking/insurance
+- ** Chat Persistente**: Sistema di sessioni chat con storico conversazioni
+- ** Completamente Localizzato**: Interfaccia e AI rispondono in italiano
+- ** Type-Safe**: Implementazione completa in TypeScript
+- ** Database Persistente**: PostgreSQL con Prisma ORM per storico valutazioni e sessioni AI
 
 ### Tech Highlights
 - **Backend**: Node.js + Express + TypeScript
@@ -26,7 +26,7 @@ DriveWell è un sistema completo di valutazione del rischio assicurativo che com
 
 ---
 
-## 📸 Demo
+##  Demo
 
 ### Dashboard Principale
 Il dashboard presenta uno stile professionale da istituto bancario/assicurativo con:
@@ -45,7 +45,7 @@ Il dashboard presenta uno stile professionale da istituto bancario/assicurativo 
 
 ---
 
-## 🏗️ Architettura del Sistema
+##  Architettura del Sistema
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -90,7 +90,7 @@ Il dashboard presenta uno stile professionale da istituto bancario/assicurativo 
 
 ---
 
-## 🚀 Installazione e Setup
+##  Installazione e Setup
 
 ### Prerequisiti
 
@@ -167,7 +167,7 @@ Il server sarà disponibile su:
 
 ---
 
-## 🎮 Utilizzo
+##  Utilizzo
 
 ### Dashboard Web
 
@@ -195,7 +195,7 @@ L'AI fornisce risposte personalizzate basate sul tuo profilo di guida reale.
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 ### Health Check
 
@@ -321,11 +321,11 @@ Recupera la sessione attiva e lo storico messaggi per un driver.
 
 ---
 
-## 📊 Sistema di Scoring Dettagliato
+##  Sistema di Scoring Dettagliato
 
 ### 15 Parametri di Guida
 
-#### 🛡️ Safety (40% peso totale)
+####  Safety (40% peso totale)
 | Parametro | Range Ottimale | Peso Area |
 |-----------|----------------|-----------|
 | **Frenate Brusche** | < 0.5 eventi/100km | 30% |
@@ -333,7 +333,7 @@ Recupera la sessione attiva e lo storico messaggi per un driver.
 | **Violazioni Velocità** | < 0.2 eventi/100km | 30% |
 | **Entità Eccesso Velocità** | < 3 km/h | 15% |
 
-#### ⚡ Efficiency (20% peso totale)
+####  Efficiency (20% peso totale)
 | Parametro | Range Ottimale | Peso Area |
 |-----------|----------------|-----------|
 | **Accelerazione Fluida** | > 85% | 30% |
@@ -341,7 +341,7 @@ Recupera la sessione attiva e lo storico messaggi per un driver.
 | **Uso Marcia Ottimale** | > 80% | 20% |
 | **Efficienza Carburante** | > 75 | 25% |
 
-#### 👤 Behavior (25% peso totale)
+#### Behavior (25% peso totale)
 | Parametro | Range Ottimale | Peso Area |
 |-----------|----------------|-----------|
 | **Guida Notturna** | < 15% | 30% |
@@ -349,7 +349,7 @@ Recupera la sessione attiva e lo storico messaggi per un driver.
 | **Uso Telefono** | < 0.5 eventi/100km | 35% |
 | **Indicatori Affaticamento** | < 0.5 eventi/100km | 15% |
 
-#### 🏆 Experience (15% peso totale)
+####  Experience (15% peso totale)
 | Parametro | Range Ottimale | Peso Area |
 |-----------|----------------|-----------|
 | **Chilometraggio Totale** | > 100,000 km | 35% |
@@ -397,7 +397,7 @@ premiumModifier =
 
 ---
 
-## 🤖 AI Coach - Architettura e Prompt Engineering
+##  AI Coach - Architettura e Prompt Engineering
 
 ### Sistema di Prompt
 
@@ -458,7 +458,7 @@ Sei un esperto AI Driving Coach per DriveWell...
 
 ---
 
-## 📁 Struttura del Progetto
+##  Struttura del Progetto
 
 ```
 DriveWell/
@@ -528,7 +528,7 @@ DriveWell/
 
 ---
 
-## 🗄️ Database Schema (Prisma)
+##  Database Schema (Prisma)
 
 ```prisma
 model Driver {
@@ -576,7 +576,7 @@ model ChatMessage {
 
 ---
 
-## ⚙️ Configurazione Avanzata
+##  Configurazione Avanzata
 
 ### Personalizzazione Pesi e Soglie
 
@@ -621,7 +621,7 @@ Regole in [src/config/recommendations.config.ts](src/config/recommendations.conf
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Test Manuali API
 
@@ -652,7 +652,7 @@ curl -X POST http://localhost:3000/api/v1/coach/chat \
 
 ---
 
-## 🚀 Deployment
+##  Deployment
 
 ### Opzioni Consigliate
 
@@ -689,7 +689,7 @@ OPENAI_API_KEY=sk-proj-your-key
 
 ---
 
-## 💡 Decisioni Tecniche e Design Patterns
+##  Decisioni Tecniche e Design Patterns
 
 ### 1. **Service Layer Pattern**
 Separazione netta tra controller (HTTP logic) e servizi (business logic) per testabilità e riusabilità.
@@ -714,7 +714,7 @@ API di assessment completamente stateless, mentre chat mantiene stato in DB per 
 
 ---
 
-## 📈 Metriche e Performance
+##  Metriche e Performance
 
 ### Benchmark Tipici
 
@@ -733,7 +733,7 @@ API di assessment completamente stateless, mentre chat mantiene stato in DB per 
 
 ---
 
-## 🔮 Roadmap Future
+##  Roadmap Future
 
 ### Short-term
 - [ ] Unit tests completi (Jest + Supertest)
@@ -800,7 +800,7 @@ curl https://api.openai.com/v1/models \
 
 ---
 
-## 👨‍💻 Developer Notes
+##  Developer Notes
 
 ### Code Style
 - **Indentation**: 2 spazi
@@ -833,7 +833,7 @@ node --inspect dist/app.js
 
 ---
 
-## 📚 Risorse Utili
+##  Risorse Utili
 
 ### Documentazione
 - [Express.js](https://expressjs.com/)
@@ -848,7 +848,7 @@ node --inspect dist/app.js
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Questo è un progetto portfolio, ma suggerimenti e feedback sono sempre benvenuti!
 
@@ -861,30 +861,19 @@ Per contribuire:
 
 ---
 
-## 📄 Licenza
+##  Licenza
 
 ISC License - vedi [LICENSE](LICENSE) file per dettagli.
 
 ---
 
-## 📞 Contatti
+##  Contatti
 
 **Repository**: [github.com/RubbinRubbin/DriveWell](https://github.com/RubbinRubbin/DriveWell)
 
 ---
 
-## 🙏 Ringraziamenti
-
-- **OpenAI** per GPT-4 API
-- **Prisma Team** per l'eccellente ORM
-- **Tailwind Labs** per TailwindCSS
-- **Community TypeScript** per type definitions
-
----
-
-<div align="center">
-
-**🚗 DriveWell - Guida meglio, paga meno.**
+** DriveWell - Guida meglio, paga meno.**
 
 *Developed with ❤️ and TypeScript*
 
