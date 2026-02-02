@@ -100,12 +100,12 @@ function displayResults(profile) {
     scoreRing.style.setProperty('--score-angle', `${scoreAngle}deg`);
     scoreRing.style.background = `conic-gradient(from 0deg, ${scoreColor} 0deg, ${scoreColor} ${scoreAngle}deg, #e5e7eb ${scoreAngle}deg, #e5e7eb 360deg)`;
 
-    document.getElementById('overallScore').textContent = Math.round(profile.overallScore);
+    document.getElementById('overallScore').textContent = profile.overallScore.toFixed(1);
     document.getElementById('gradeBadge').textContent = profile.overallGrade;
     document.getElementById('gradeBadge').className = `text-5xl font-bold ${getGradeTextColor(profile.overallGrade)}`;
 
     // Update sidebar summary
-    document.getElementById('sidebarScore').textContent = Math.round(profile.overallScore);
+    document.getElementById('sidebarScore').textContent = profile.overallScore.toFixed(1);
     document.getElementById('sidebarGrade').textContent = profile.overallGrade;
     document.getElementById('sidebarRisk').textContent = translateRisk(profile.riskLevel);
 
@@ -120,17 +120,17 @@ function displayResults(profile) {
     const modifier = profile.premiumModifier;
 
     if (modifier < 1) {
-        const discount = Math.round((1 - modifier) * 100);
+        const discount = ((1 - modifier) * 100).toFixed(1);
         premiumValue.textContent = `-${discount}%`;
         premiumValue.className = 'text-2xl font-bold text-green-600';
         premiumDetail.textContent = 'Sconto sul premio base';
     } else if (modifier > 1) {
-        const increase = Math.round((modifier - 1) * 100);
+        const increase = ((modifier - 1) * 100).toFixed(1);
         premiumValue.textContent = `+${increase}%`;
         premiumValue.className = 'text-2xl font-bold text-red-600';
         premiumDetail.textContent = 'Aumento sul premio base';
     } else {
-        premiumValue.textContent = '0%';
+        premiumValue.textContent = '0.0%';
         premiumValue.className = 'text-2xl font-bold text-gray-600';
         premiumDetail.textContent = 'Premio standard';
     }
@@ -180,7 +180,7 @@ function displayCompetencyAreas(competencyScores) {
                     <i class="bi bi-${icon} text-${color}-600"></i>
                     <h3 class="font-semibold text-gray-800">${name}</h3>
                 </div>
-                <span class="text-lg font-bold ${getScoreTextColor(area.score)}">${Math.round(area.score)}</span>
+                <span class="text-lg font-bold ${getScoreTextColor(area.score)}">${area.score.toFixed(1)}</span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-2">
                 <div class="h-2 rounded-full ${getScoreBarColor(area.score)}" style="width: ${area.score}%"></div>
@@ -233,11 +233,11 @@ function displayRecommendations(recommendations) {
                     <div class="flex items-center space-x-4 text-xs text-gray-500">
                         <span class="flex items-center space-x-1">
                             <i class="bi bi-graph-up-arrow text-green-500"></i>
-                            <span>+${rec.potentialImpact.scoreImprovement} punti</span>
+                            <span>+${rec.potentialImpact.scoreImprovement.toFixed(1)} punti</span>
                         </span>
                         <span class="flex items-center space-x-1">
                             <i class="bi bi-piggy-bank text-green-500"></i>
-                            <span>-${rec.potentialImpact.premiumReduction}% premio</span>
+                            <span>-${rec.potentialImpact.premiumReduction.toFixed(1)}% premio</span>
                         </span>
                     </div>
                 </div>
@@ -354,7 +354,7 @@ async function sendMessage(event) {
 
         if (data.success) {
             currentSessionId = data.data.sessionId;
-            addMessageToChat(data.data.aiResponse, 'assistant');
+            addMessageToChat(data.data.response, 'assistant');
         } else {
             addMessageToChat('Mi dispiace, si e verificato un errore. Riprova.', 'assistant');
         }

@@ -247,7 +247,6 @@ async function handleSubmitDrivingData(event) {
             phoneUsageEventsPerHundredKm: parseFloat(document.getElementById('dd_phone_usage').value),
             fatigueIndicatorsPerHundredKm: parseFloat(document.getElementById('dd_fatigue').value),
             totalMileageDriven: parseInt(document.getElementById('dd_total_mileage').value),
-            yearsHoldingLicense: parseInt(document.getElementById('dd_years_license').value),
             routeVarietyScore: parseFloat(document.getElementById('dd_route_variety').value)
         }
     };

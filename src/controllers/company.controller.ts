@@ -128,10 +128,6 @@ export class CompanyController {
   submitDrivingData = async (req: CompanyUserRequest, res: Response, next: NextFunction) => {
     try {
       const { id: customerId } = req.params;
-      const drivingData: DrivingDataInput = {
-        ...req.body,
-        driverId: customerId
-      };
 
       // Validate customer exists
       const customer = await this.customerRepository.getCustomerById(customerId);
@@ -141,6 +137,16 @@ export class CompanyController {
           error: { message: 'Cliente non trovato' }
         });
       }
+
+      // Build driving data with yearsHoldingLicense from customer profile
+      const drivingData: DrivingDataInput = {
+        ...req.body,
+        driverId: customerId,
+        parameters: {
+          ...req.body.parameters,
+          yearsHoldingLicense: customer.driverLicenseYears || 0
+        }
+      };
 
       // Calculate profile
       const profile = await this.riskAssessmentService.assessDriver(drivingData);
