@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveWell - Accedi</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;600;700&display=swap');
+
+        * {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3 {
+            font-family: 'IBM Plex Serif', Georgia, serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+            min-height: 100vh;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .btn-professional {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-professional:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-active {
+            background-color: #1e3a8a;
+            color: white;
+        }
+
+        .tab-inactive {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <div class="min-h-screen flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-md">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <div class="flex items-center justify-center space-x-3 mb-2">
+                    <i class="bi bi-shield-check text-5xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-white tracking-tight">DriveWell</h1>
+                <p class="text-blue-100 mt-1">Valutazione del Rischio Assicurativo</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="glass rounded-2xl shadow-2xl overflow-hidden">
+                <!-- Tabs -->
+                <div class="flex">
+                    <button id="tabCompany" onclick="switchTab('company')"
+                            class="flex-1 py-4 text-sm font-semibold uppercase tracking-wide transition-all tab-active">
+                        <i class="bi bi-building mr-2"></i>Azienda
+                    </button>
+                    <button id="tabCustomer" onclick="switchTab('customer')"
+                            class="flex-1 py-4 text-sm font-semibold uppercase tracking-wide transition-all tab-inactive">
+                        <i class="bi bi-person mr-2"></i>Cliente
+                    </button>
+                </div>
+
+                <!-- Forms Container -->
+                <div class="p-8">
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                        <i class="bi bi-exclamation-circle mr-2"></i>
+                        <span id="errorText"></span>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div id="successMessage" class="hidden mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+                        <i class="bi bi-check-circle mr-2"></i>
+                        <span id="successText"></span>
+                    </div>
+
+                    <!-- Company Login Form -->
+                    <div id="companyForm" class="animate-fade-in">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Accesso Aziendale</h2>
+                        <form onsubmit="handleCompanyLogin(event)">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                    <input type="email" id="companyEmail" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="admin@azienda.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                    <input type="password" id="companyPassword" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="Inserisci la password">
+                                </div>
+                                <button type="submit" id="companySubmit"
+                                        class="w-full bg-slate-700 hover:bg-slate-800 text-white font-semibold py-3 rounded-lg transition-all btn-professional">
+                                    <span id="companySubmitText">Accedi</span>
+                                    <i id="companySpinner" class="bi bi-arrow-repeat animate-spin hidden ml-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Customer Login/Register Form -->
+                    <div id="customerForm" class="hidden animate-fade-in">
+                        <!-- Sub-tabs for Login/Register -->
+                        <div class="flex space-x-2 mb-6">
+                            <button id="subTabLogin" onclick="switchSubTab('login')"
+                                    class="flex-1 py-2 text-sm font-medium rounded-lg bg-slate-100 text-slate-700">
+                                Accedi
+                            </button>
+                            <button id="subTabRegister" onclick="switchSubTab('register')"
+                                    class="flex-1 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50">
+                                Registrati
+                            </button>
+                        </div>
+
+                        <!-- Customer Login -->
+                        <div id="customerLoginForm">
+                            <h2 class="text-xl font-bold text-gray-900 mb-6">Accesso Cliente</h2>
+                            <form onsubmit="handleCustomerLogin(event)">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" id="customerEmail" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                               placeholder="cliente@email.com">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                        <input type="password" id="customerPassword" required
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                               placeholder="Inserisci la password">
+                                    </div>
+                                    <button type="submit" id="customerSubmit"
+                                            class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-lg transition-all btn-professional">
+                                        <span id="customerSubmitText">Accedi</span>
+                                        <i id="customerSpinner" class="bi bi-arrow-repeat animate-spin hidden ml-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Customer Register -->
+                        <div id="customerRegisterForm" class="hidden">
+                            <h2 class="text-xl font-bold text-gray-900 mb-6">Registrazione Cliente</h2>
+                            <form onsubmit="handleCustomerRegister(event)">
+                                <div class="space-y-4">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                                            <input type="text" id="registerFullName" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="Mario Rossi">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                            <input type="email" id="registerEmail" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="mario.rossi@email.com">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+                                            <input type="password" id="registerPassword" required minlength="6"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="Minimo 6 caratteri">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Telefono</label>
+                                            <input type="tel" id="registerPhone"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="+39 333...">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Anni Patente</label>
+                                            <input type="number" id="registerLicenseYears" min="0"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="Es: 5">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Numero Patente</label>
+                                            <input type="text" id="registerLicenseNumber"
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="ES: AB12345678C">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Codice Registrazione *</label>
+                                            <input type="text" id="registerCode" required
+                                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                   placeholder="Inserisci il codice fornito">
+                                            <p class="text-xs text-gray-500 mt-1">Contatta la tua azienda per ottenere il codice</p>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="registerSubmit"
+                                            class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-lg transition-all btn-professional">
+                                        <span id="registerSubmitText">Registrati</span>
+                                        <i id="registerSpinner" class="bi bi-arrow-repeat animate-spin hidden ml-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-6 text-blue-100 text-sm">
+                <p>DriveWell - Sistema di Valutazione del Rischio</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>

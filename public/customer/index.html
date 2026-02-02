@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveWell - Il Mio Profilo</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;600;700&display=swap');
+
+        * {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3 {
+            font-family: 'IBM Plex Serif', Georgia, serif;
+        }
+
+        .gradient-bg {
+            background: #f8f9fa;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .score-ring {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #0f766e 0deg, #0f766e var(--score-angle), #e5e7eb var(--score-angle), #e5e7eb 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-ring::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .corporate-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            border-bottom: 3px solid #1e3a8a;
+        }
+
+        .btn-professional {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-professional:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <header class="corporate-header shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="bi bi-shield-check text-4xl text-white"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white tracking-tight">DriveWell</h1>
+                        <p class="text-sm text-blue-100">Il Tuo Profilo di Guida</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 text-sm text-blue-100">
+                        <i class="bi bi-person-circle text-lg"></i>
+                        <span id="userName" class="font-medium">Caricamento...</span>
+                    </div>
+                    <button onclick="handleLogout()"
+                            class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                        <i class="bi bi-box-arrow-right mr-1"></i>Esci
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm p-6 space-y-6">
+                    <!-- Profile Summary -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Il Tuo Profilo</h2>
+                        <div id="sidebarSummary" class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                <span class="text-sm text-gray-600">Score</span>
+                                <span id="sidebarScore" class="text-lg font-bold text-slate-700">-</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                <span class="text-sm text-gray-600">Grado</span>
+                                <span id="sidebarGrade" class="text-lg font-bold text-slate-700">-</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                                <span class="text-sm text-gray-600">Rischio</span>
+                                <span id="sidebarRisk" class="text-sm font-medium text-slate-700">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200"></div>
+
+                    <!-- Info -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-4">Informazioni</h2>
+                        <div class="text-sm text-gray-600 space-y-2">
+                            <p id="infoEmail" class="flex items-center space-x-2">
+                                <i class="bi bi-envelope text-gray-400"></i>
+                                <span>-</span>
+                            </p>
+                            <p id="infoPhone" class="flex items-center space-x-2">
+                                <i class="bi bi-telephone text-gray-400"></i>
+                                <span>-</span>
+                            </p>
+                            <p id="infoLicense" class="flex items-center space-x-2">
+                                <i class="bi bi-card-text text-gray-400"></i>
+                                <span>-</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:col-span-3">
+
+                <!-- Loading State -->
+                <div id="loading" class="bg-white rounded-xl shadow-sm p-12 border border-gray-200">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-3 border-slate-700 mb-4"></div>
+                        <p class="text-gray-700 font-medium">Caricamento profilo...</p>
+                    </div>
+                </div>
+
+                <!-- No Profile State -->
+                <div id="noProfile" class="hidden bg-white rounded-xl shadow-sm p-12 text-center">
+                    <i class="bi bi-speedometer2 text-6xl text-gray-300 mb-4"></i>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Profilo Non Disponibile</h2>
+                    <p class="text-gray-600 mb-4">Il tuo profilo di guida non e ancora stato elaborato.<br>Contatta la tua azienda per l'inserimento dei dati telematici.</p>
+                    <p class="text-sm text-gray-500">Nel frattempo, puoi usare il chatbot per informazioni generali sulla guida sicura.</p>
+                </div>
+
+                <!-- Results Container -->
+                <div id="results" class="hidden space-y-6">
+                    <!-- Score Overview -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Main Score Card -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 md:col-span-1">
+                            <div class="flex flex-col items-center">
+                                <div class="score-ring mb-4" id="scoreRing">
+                                    <div class="relative z-10 text-center">
+                                        <div id="overallScore" class="text-4xl font-bold text-gray-900">0</div>
+                                        <div class="text-sm text-gray-500">Punteggio Totale</div>
+                                    </div>
+                                </div>
+                                <div id="gradeBadge" class="text-5xl font-bold text-slate-700">-</div>
+                            </div>
+                        </div>
+
+                        <!-- Risk & Premium Cards -->
+                        <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex items-center space-x-2 mb-3">
+                                    <i class="bi bi-shield-exclamation text-gray-400"></i>
+                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Livello di Rischio</h3>
+                                </div>
+                                <div id="riskBadge" class="text-2xl font-bold">-</div>
+                            </div>
+
+                            <div class="bg-white rounded-xl shadow-sm p-6">
+                                <div class="flex items-center space-x-2 mb-3">
+                                    <i class="bi bi-wallet2 text-gray-400"></i>
+                                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wide">Impatto sul Premio</h3>
+                                </div>
+                                <div id="premiumValue" class="text-2xl font-bold">-</div>
+                                <div id="premiumDetail" class="text-sm text-gray-500 mt-1">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Competency Areas -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Aree di Competenza</h2>
+                        <div id="competencyGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-lg font-bold text-gray-900 mb-6">Raccomandazioni</h2>
+                        <div id="recommendationsList" class="space-y-3">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- AI Coach Chat Button -->
+    <div id="chatButton" class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChat()"
+                class="bg-slate-700 hover:bg-slate-800 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 btn-professional">
+            <i class="bi bi-car-front-fill text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- AI Coach Chat Panel -->
+    <div id="chatPanel" class="fixed bottom-6 right-6 w-full max-w-md h-[600px] bg-white rounded-xl shadow-2xl z-50 hidden flex-col">
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-xl flex items-center justify-between shadow-md">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white rounded-full p-2">
+                    <i class="bi bi-car-front-fill text-2xl text-slate-700"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">Coach di Guida Intelligente</h3>
+                    <p class="text-xs text-slate-200">Consulenza personalizzata</p>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-white hover:text-gray-300 transition-colors">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            <!-- Welcome message -->
+            <div class="flex justify-start">
+                <div class="bg-white border border-gray-200 rounded-lg px-4 py-3 max-w-[85%] shadow-sm">
+                    <div class="flex items-start space-x-2">
+                        <div class="bg-slate-100 rounded-full p-1.5 mt-0.5">
+                            <i class="bi bi-car-front-fill text-slate-700 text-sm"></i>
+                        </div>
+                        <div class="text-sm text-gray-800">
+                            <p class="font-semibold text-slate-700 mb-1">Benvenuto!</p>
+                            <p>Sono il tuo Coach di Guida Intelligente. Posso aiutarti a comprendere il tuo comportamento al volante e migliorare il tuo premio assicurativo. Chiedimi pure!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="hidden px-4 py-2 bg-gray-50">
+            <div class="flex items-center space-x-2 text-gray-500">
+                <div class="flex space-x-1">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                </div>
+                <span class="text-sm font-medium">Il coach sta analizzando...</span>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="border-t border-gray-200 p-4 bg-white rounded-b-xl">
+            <form onsubmit="sendMessage(event)" class="flex space-x-2">
+                <input type="text"
+                       id="chatInput"
+                       placeholder="Chiedi informazioni sulla tua guida..."
+                       class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all"
+                       autocomplete="off">
+                <button type="submit"
+                        class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-3 rounded-lg transition-all btn-professional">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </form>
+
+            <!-- Quick Actions -->
+            <div class="flex flex-wrap gap-2 mt-3">
+                <button onclick="sendQuickMessage('Perche il mio punteggio e basso?')"
+                        class="text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full hover:bg-slate-100 transition-all border border-slate-300 font-medium btn-professional">
+                    Perche il mio punteggio e basso?
+                </button>
+                <button onclick="sendQuickMessage('Come posso migliorare?')"
+                        class="text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full hover:bg-slate-100 transition-all border border-slate-300 font-medium btn-professional">
+                    Come posso migliorare?
+                </button>
+                <button onclick="sendQuickMessage('Su cosa devo concentrarmi?')"
+                        class="text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-full hover:bg-slate-100 transition-all border border-slate-300 font-medium btn-professional">
+                    Su cosa concentrarmi?
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/customer/js/customer-dashboard.js"></script>
+</body>
+</html>

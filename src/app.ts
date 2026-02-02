@@ -1,14 +1,14 @@
+// Load environment variables FIRST (before any other imports)
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
 import path from 'path';
 import { apiRouter } from './routes/index.routes';
 import { errorHandler } from './middleware/error-handler';
-
-// Load environment variables
-dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -23,16 +23,16 @@ app.use(morgan('dev')); // Logging
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
+// Redirect root to login page (BEFORE static middleware)
+app.get('/', (req, res) => {
+  res.redirect('/login.html');
+});
+
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, '../public')));
 
 // API Routes
 app.use(`/api/${API_VERSION}`, apiRouter);
-
-// Serve dashboard on root
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

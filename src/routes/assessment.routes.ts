@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { AssessmentController } from '../controllers/assessment.controller';
 import { validateDrivingData } from '../middleware/request-validator';
 
 export const assessmentRouter = Router();
-const prisma = new PrismaClient();
-const controller = new AssessmentController(prisma);
+const controller = new AssessmentController();
 
 /**
  * POST /api/v1/assessments
