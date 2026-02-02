@@ -41,6 +41,12 @@ companyRouter.delete('/customers/:id', controller.deleteCustomer);
 companyRouter.get('/customers/:id/profile', controller.getCustomerProfile);
 
 /**
+ * GET /api/v1/company/customers/:id/driving-data
+ * Get customer's driving data parameters
+ */
+companyRouter.get('/customers/:id/driving-data', controller.getDrivingData);
+
+/**
  * POST /api/v1/company/customers/:id/driving-data
  * Submit driving data for a customer and calculate profile
  */

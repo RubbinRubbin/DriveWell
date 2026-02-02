@@ -203,11 +203,65 @@ function translateRisk(risk) {
 }
 
 // Modal handlers
-function openDrivingDataModal(customerId, customerName) {
+async function openDrivingDataModal(customerId, customerName) {
     document.getElementById('drivingDataModal').classList.remove('hidden');
     document.getElementById('drivingDataCustomerId').value = customerId;
     document.getElementById('drivingDataCustomerName').textContent = `Cliente: ${customerName}`;
     document.getElementById('drivingDataError').classList.add('hidden');
+
+    // Reset all fields to 0
+    resetDrivingDataForm();
+
+    // Check if customer has existing profile
+    const customer = customers.find(c => c.id === customerId);
+    if (customer && customer.driverProfile && customer.driverProfile.overallScore !== null) {
+        // Load existing driving data
+        await loadExistingDrivingData(customerId);
+    }
+}
+
+function resetDrivingDataForm() {
+    document.getElementById('dd_harsh_braking').value = 0;
+    document.getElementById('dd_harsh_acceleration').value = 0;
+    document.getElementById('dd_speeding_violations').value = 0;
+    document.getElementById('dd_speeding_magnitude').value = 0;
+    document.getElementById('dd_smooth_acceleration').value = 0;
+    document.getElementById('dd_idling_time').value = 0;
+    document.getElementById('dd_optimal_gear').value = 0;
+    document.getElementById('dd_fuel_efficiency').value = 0;
+    document.getElementById('dd_night_driving').value = 0;
+    document.getElementById('dd_weekend_driving').value = 0;
+    document.getElementById('dd_phone_usage').value = 0;
+    document.getElementById('dd_fatigue').value = 0;
+    document.getElementById('dd_total_mileage').value = 0;
+    document.getElementById('dd_route_variety').value = 0;
+}
+
+async function loadExistingDrivingData(customerId) {
+    try {
+        const response = await fetchWithAuth(`${API_BASE_URL}/company/customers/${customerId}/driving-data`);
+        const data = await response.json();
+
+        if (data.success && data.data.parameters) {
+            const params = data.data.parameters;
+            document.getElementById('dd_harsh_braking').value = params.harshBrakingEventsPerHundredKm || 0;
+            document.getElementById('dd_harsh_acceleration').value = params.harshAccelerationEventsPerHundredKm || 0;
+            document.getElementById('dd_speeding_violations').value = params.speedingViolationsPerHundredKm || 0;
+            document.getElementById('dd_speeding_magnitude').value = params.averageSpeedingMagnitudeKmh || 0;
+            document.getElementById('dd_smooth_acceleration').value = params.smoothAccelerationPercentage || 0;
+            document.getElementById('dd_idling_time').value = params.idlingTimePercentage || 0;
+            document.getElementById('dd_optimal_gear').value = params.optimalGearUsagePercentage || 0;
+            document.getElementById('dd_fuel_efficiency').value = params.fuelEfficiencyScore || 0;
+            document.getElementById('dd_night_driving').value = params.nightDrivingPercentage || 0;
+            document.getElementById('dd_weekend_driving').value = params.weekendDrivingPercentage || 0;
+            document.getElementById('dd_phone_usage').value = params.phoneUsageEventsPerHundredKm || 0;
+            document.getElementById('dd_fatigue').value = params.fatigueIndicatorsPerHundredKm || 0;
+            document.getElementById('dd_total_mileage').value = params.totalMileageDriven || 0;
+            document.getElementById('dd_route_variety').value = params.routeVarietyScore || 0;
+        }
+    } catch (error) {
+        console.error('Failed to load existing driving data:', error);
+    }
 }
 
 function closeDrivingDataModal() {

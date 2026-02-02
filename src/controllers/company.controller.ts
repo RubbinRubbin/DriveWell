@@ -124,6 +124,31 @@ export class CompanyController {
     }
   };
 
+  // GET /api/v1/company/customers/:id/driving-data
+  getDrivingData = async (req: CompanyUserRequest, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      const dbProfile = await this.driverProfileRepository.getByCustomerId(id);
+
+      if (!dbProfile) {
+        return res.status(404).json({
+          success: false,
+          error: { message: 'Dati di guida non disponibili per questo cliente' }
+        });
+      }
+
+      const drivingData = this.driverProfileRepository.toDrivingDataInput(dbProfile);
+
+      res.status(200).json({
+        success: true,
+        data: drivingData
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // POST /api/v1/company/customers/:id/driving-data
   submitDrivingData = async (req: CompanyUserRequest, res: Response, next: NextFunction) => {
     try {
