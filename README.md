@@ -1,88 +1,88 @@
 # DriveWell
 
-## Insurance Risk Assessment Platform with AI-Powered Driving Coach
+## Piattaforma di Valutazione del Rischio Assicurativo con AI Driving Coach
 
-DriveWell is a comprehensive driver risk assessment system designed for insurance companies. The platform analyzes 15 driving parameters across 4 competency areas, generates detailed risk profiles, and provides personalized coaching through an AI assistant powered by OpenAI GPT-4.
+DriveWell e' un sistema completo di valutazione del rischio per guidatori, progettato per compagnie assicurative. La piattaforma analizza 15 parametri di guida attraverso 4 aree di competenza, genera profili di rischio dettagliati e fornisce coaching personalizzato tramite un assistente AI basato su OpenAI GPT-4.
 
-The system features separate dashboards for insurance company operators and individual customers, with role-based authentication and real-time profile calculations.
+Il sistema dispone di dashboard separate per operatori assicurativi e clienti individuali, con autenticazione basata su ruoli e calcolo dei profili in tempo reale.
 
 ---
 
-## Table of Contents
+## Indice
 
-1. [Features](#features)
-2. [Architecture](#architecture)
-3. [Technology Stack](#technology-stack)
-4. [Installation](#installation)
-5. [Configuration](#configuration)
-6. [Usage](#usage)
-7. [API Reference](#api-reference)
-8. [Database Schema](#database-schema)
-9. [Scoring Algorithm](#scoring-algorithm)
-10. [Project Structure](#project-structure)
+1. [Funzionalita](#funzionalita)
+2. [Architettura](#architettura)
+3. [Stack Tecnologico](#stack-tecnologico)
+4. [Installazione](#installazione)
+5. [Configurazione](#configurazione)
+6. [Utilizzo](#utilizzo)
+7. [Riferimento API](#riferimento-api)
+8. [Schema Database](#schema-database)
+9. [Algoritmo di Scoring](#algoritmo-di-scoring)
+10. [Struttura del Progetto](#struttura-del-progetto)
 11. [Deployment](#deployment)
-12. [License](#license)
+12. [Licenza](#licenza)
 
 ---
 
-## Features
+## Funzionalita
 
-### Core Functionality
+### Funzionalita Principali
 
-- **15-Parameter Analysis**: Comprehensive driving behavior assessment across safety, efficiency, behavior, and experience metrics
-- **Risk Profiling**: Automatic calculation of risk levels (very-low to very-high) with corresponding premium modifiers
-- **Grade Assignment**: A through F grading system based on overall driving performance
-- **Actionable Recommendations**: Prioritized improvement suggestions with estimated impact on score and premium
+- **Analisi a 15 Parametri**: Valutazione completa del comportamento di guida attraverso metriche di sicurezza, efficienza, comportamento ed esperienza
+- **Profilazione del Rischio**: Calcolo automatico dei livelli di rischio (da molto basso a molto alto) con relativi modificatori di premio
+- **Assegnazione Voti**: Sistema di valutazione da A a F basato sulla performance complessiva di guida
+- **Raccomandazioni Attuabili**: Suggerimenti di miglioramento prioritizzati con stima dell'impatto su punteggio e premio
 
-### Dual Dashboard System
+### Sistema a Doppia Dashboard
 
-- **Company Dashboard**: Customer management interface for insurance operators
-  - View all registered customers with their driving scores
-  - Input driving data for individual customers
-  - Monitor statistics (total customers, average score, high-risk count)
-  - Soft-delete functionality for customer records
+- **Dashboard Aziendale**: Interfaccia di gestione clienti per operatori assicurativi
+  - Visualizzazione di tutti i clienti registrati con i relativi punteggi di guida
+  - Inserimento dati di guida per singoli clienti
+  - Monitoraggio statistiche (clienti totali, punteggio medio, conteggio alto rischio)
+  - Funzionalita di eliminazione soft per i record dei clienti
 
-- **Customer Dashboard**: Self-service portal for insured drivers
-  - View personal driving profile and risk assessment
-  - Access competency breakdown by area
-  - Review personalized recommendations
-  - Interact with AI Driving Coach
+- **Dashboard Cliente**: Portale self-service per gli assicurati
+  - Visualizzazione del profilo di guida personale e valutazione del rischio
+  - Accesso alla suddivisione delle competenze per area
+  - Consultazione delle raccomandazioni personalizzate
+  - Interazione con l'AI Driving Coach
 
-### Authentication System
+### Sistema di Autenticazione
 
-- Role-based access control (company users vs customers)
-- JWT token authentication via Supabase Auth
-- Customer self-registration with company code verification
-- Secure session management
+- Controllo accessi basato su ruoli (utenti aziendali vs clienti)
+- Autenticazione JWT tramite Supabase Auth
+- Auto-registrazione clienti con verifica codice aziendale
+- Gestione sessioni sicura
 
 ### AI Driving Coach
 
-- Conversational interface powered by GPT-4
-- Context-aware responses based on individual driving profile
-- Session persistence for continuous conversations
-- Italian language support throughout
+- Interfaccia conversazionale basata su GPT-4
+- Risposte contestualizzate basate sul profilo di guida individuale
+- Persistenza della sessione per conversazioni continue
+- Supporto completo in lingua italiana
 
 ---
 
-## Architecture
+## Architettura
 
 ```
-                                    FRONTEND LAYER
+                                    LIVELLO FRONTEND
     +------------------------------------------------------------------+
     |                                                                  |
     |   /login.html          /company/           /customer/            |
-    |   Authentication       Company Dashboard   Customer Dashboard    |
+    |   Autenticazione       Dashboard Azienda   Dashboard Cliente     |
     |                                                                  |
     +------------------------------------------------------------------+
                                       |
                                       | HTTP/REST + JWT
                                       v
     +------------------------------------------------------------------+
-    |                         API LAYER (Express.js)                   |
+    |                         LIVELLO API (Express.js)                 |
     |                                                                  |
-    |   /api/v1/auth/*        Authentication endpoints                 |
-    |   /api/v1/company/*     Company management endpoints             |
-    |   /api/v1/customer/*    Customer profile + AI Coach              |
+    |   /api/v1/auth/*        Endpoint autenticazione                  |
+    |   /api/v1/company/*     Endpoint gestione aziendale              |
+    |   /api/v1/customer/*    Profilo cliente + AI Coach               |
     |                                                                  |
     +------------------------------------------------------------------+
                                       |
@@ -90,11 +90,11 @@ The system features separate dashboards for insurance company operators and indi
                     |                                   |
                     v                                   v
     +---------------------------+       +---------------------------+
-    |      SERVICE LAYER        |       |     EXTERNAL SERVICES     |
+    |      LIVELLO SERVIZI      |       |     SERVIZI ESTERNI       |
     |                           |       |                           |
     | - RiskAssessmentService   |       |   Supabase                |
-    | - ProfileScoringService   |       |   - Authentication        |
-    | - RecommendationService   |       |   - PostgreSQL Database   |
+    | - ProfileScoringService   |       |   - Autenticazione        |
+    | - RecommendationService   |       |   - Database PostgreSQL   |
     | - AICoachService          |       |                           |
     | - PromptBuilderService    |       |   OpenAI API              |
     |                           |       |   - GPT-4 Chat            |
@@ -103,61 +103,61 @@ The system features separate dashboards for insurance company operators and indi
 
 ---
 
-## Technology Stack
+## Stack Tecnologico
 
-| Layer | Technology |
-|-------|------------|
+| Livello | Tecnologia |
+|---------|------------|
 | Runtime | Node.js 18+ |
-| Language | TypeScript 5.x |
+| Linguaggio | TypeScript 5.x |
 | Framework | Express.js 4.x |
 | Database | PostgreSQL (Supabase) |
-| Authentication | Supabase Auth (JWT) |
-| AI Integration | OpenAI GPT-4 |
+| Autenticazione | Supabase Auth (JWT) |
+| Integrazione AI | OpenAI GPT-4 |
 | Frontend | HTML5, TailwindCSS, Vanilla JavaScript |
 
 ---
 
-## Installation
+## Installazione
 
-### Prerequisites
+### Prerequisiti
 
 - Node.js >= 18.x
 - npm >= 9.x
-- Supabase account with project configured
-- OpenAI API key
+- Account Supabase con progetto configurato
+- Chiave API OpenAI
 
-### Setup Steps
+### Passaggi di Setup
 
-1. Clone the repository:
+1. Clonare il repository:
 
 ```bash
 git clone https://github.com/yourusername/DriveWell.git
 cd DriveWell
 ```
 
-2. Install dependencies:
+2. Installare le dipendenze:
 
 ```bash
 npm install
 ```
 
-3. Configure environment variables (see [Configuration](#configuration))
+3. Configurare le variabili d'ambiente (vedi [Configurazione](#configurazione))
 
-4. Initialize database schema in Supabase using the SQL scripts in `/supabase/migrations/`
+4. Inizializzare lo schema del database in Supabase usando gli script SQL in `/supabase/migrations/`
 
-5. Start development server:
+5. Avviare il server di sviluppo:
 
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`
+L'applicazione sara disponibile su `http://localhost:3000`
 
 ---
 
-## Configuration
+## Configurazione
 
-Create a `.env` file in the project root with the following variables:
+Creare un file `.env` nella root del progetto con le seguenti variabili:
 
 ```env
 # Server
@@ -175,67 +175,67 @@ OPENAI_MODEL=gpt-4
 OPENAI_MAX_TOKENS=800
 OPENAI_TEMPERATURE=0.7
 
-# Customer Registration
+# Registrazione Clienti
 CUSTOMER_REGISTRATION_CODE=DRIVEWELL2026
 ```
 
-### Environment Variables Reference
+### Riferimento Variabili d'Ambiente
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PORT` | No | Server port (default: 3000) |
-| `NODE_ENV` | No | Environment mode (development/production) |
-| `SUPABASE_URL` | Yes | Supabase project URL |
-| `SUPABASE_ANON_KEY` | Yes | Supabase anonymous/public key |
-| `SUPABASE_SERVICE_KEY` | Yes | Supabase service role key |
-| `OPENAI_API_KEY` | Yes | OpenAI API key for GPT-4 |
-| `OPENAI_MODEL` | No | Model identifier (default: gpt-4) |
-| `CUSTOMER_REGISTRATION_CODE` | Yes | Code required for customer self-registration |
-
----
-
-## Usage
-
-### Company Workflow
-
-1. Access the application at `http://localhost:3000`
-2. Log in with company credentials
-3. View registered customers in the dashboard
-4. Click the settings icon to input driving data for a customer
-5. Submit the 14 driving parameters to calculate the risk profile
-6. Review customer scores and risk levels in the main table
-
-### Customer Workflow
-
-1. Navigate to the login page
-2. New customers: Register using email, password, and company registration code
-3. Existing customers: Log in with credentials
-4. View driving profile with overall score, grade, and risk level
-5. Review competency scores across all four areas
-6. Read personalized recommendations
-7. Use the AI Coach (bottom-right chat icon) for guidance
-
-### AI Coach Interaction Examples
-
-The AI Coach responds to questions such as:
-
-- "Why is my score low?"
-- "How can I reduce my insurance premium?"
-- "What should I focus on improving first?"
-- "Explain how the safety score is calculated"
-- "What are my strengths as a driver?"
+| Variabile | Obbligatoria | Descrizione |
+|-----------|--------------|-------------|
+| `PORT` | No | Porta del server (default: 3000) |
+| `NODE_ENV` | No | Modalita ambiente (development/production) |
+| `SUPABASE_URL` | Si | URL del progetto Supabase |
+| `SUPABASE_ANON_KEY` | Si | Chiave anonima/pubblica Supabase |
+| `SUPABASE_SERVICE_KEY` | Si | Chiave service role Supabase |
+| `OPENAI_API_KEY` | Si | Chiave API OpenAI per GPT-4 |
+| `OPENAI_MODEL` | No | Identificatore del modello (default: gpt-4) |
+| `CUSTOMER_REGISTRATION_CODE` | Si | Codice richiesto per l'auto-registrazione clienti |
 
 ---
 
-## API Reference
+## Utilizzo
 
-### Authentication
+### Flusso di Lavoro Aziendale
+
+1. Accedere all'applicazione su `http://localhost:3000`
+2. Effettuare il login con le credenziali aziendali
+3. Visualizzare i clienti registrati nella dashboard
+4. Cliccare l'icona impostazioni per inserire i dati di guida di un cliente
+5. Inviare i 14 parametri di guida per calcolare il profilo di rischio
+6. Verificare i punteggi e i livelli di rischio dei clienti nella tabella principale
+
+### Flusso di Lavoro Cliente
+
+1. Navigare alla pagina di login
+2. Nuovi clienti: Registrarsi usando email, password e codice di registrazione aziendale
+3. Clienti esistenti: Effettuare il login con le proprie credenziali
+4. Visualizzare il profilo di guida con punteggio complessivo, voto e livello di rischio
+5. Consultare i punteggi di competenza in tutte e quattro le aree
+6. Leggere le raccomandazioni personalizzate
+7. Utilizzare l'AI Coach (icona chat in basso a destra) per ricevere consigli
+
+### Esempi di Interazione con l'AI Coach
+
+L'AI Coach risponde a domande come:
+
+- "Perche il mio punteggio e basso?"
+- "Come posso ridurre il mio premio assicurativo?"
+- "Su cosa dovrei concentrarmi per migliorare?"
+- "Spiega come viene calcolato il punteggio di sicurezza"
+- "Quali sono i miei punti di forza come guidatore?"
+
+---
+
+## Riferimento API
+
+### Autenticazione
 
 #### POST /api/v1/auth/login
 
-Authenticate user (company or customer).
+Autenticazione utente (aziendale o cliente).
 
-**Request:**
+**Richiesta:**
 ```json
 {
   "email": "user@example.com",
@@ -243,7 +243,7 @@ Authenticate user (company or customer).
 }
 ```
 
-**Response:**
+**Risposta:**
 ```json
 {
   "success": true,
@@ -258,9 +258,9 @@ Authenticate user (company or customer).
 
 #### POST /api/v1/auth/register/customer
 
-Register new customer account.
+Registrazione nuovo account cliente.
 
-**Request:**
+**Richiesta:**
 ```json
 {
   "email": "customer@example.com",
@@ -270,19 +270,19 @@ Register new customer account.
 }
 ```
 
-### Company Endpoints
+### Endpoint Aziendali
 
-All company endpoints require authentication with a company user token.
+Tutti gli endpoint aziendali richiedono autenticazione con token utente aziendale.
 
 #### GET /api/v1/company/customers
 
-Retrieve all customers with profile summaries.
+Recupera tutti i clienti con i riepiloghi dei profili.
 
 #### GET /api/v1/company/statistics
 
-Get dashboard statistics.
+Ottiene le statistiche della dashboard.
 
-**Response:**
+**Risposta:**
 ```json
 {
   "success": true,
@@ -294,11 +294,15 @@ Get dashboard statistics.
 }
 ```
 
+#### GET /api/v1/company/customers/:id/driving-data
+
+Recupera i parametri di guida esistenti di un cliente.
+
 #### POST /api/v1/company/customers/:id/driving-data
 
-Submit driving data and calculate profile.
+Invia i dati di guida e calcola il profilo.
 
-**Request:**
+**Richiesta:**
 ```json
 {
   "analysisWindow": {
@@ -326,141 +330,141 @@ Submit driving data and calculate profile.
 }
 ```
 
-### Customer Endpoints
+### Endpoint Cliente
 
-All customer endpoints require authentication with a customer token.
+Tutti gli endpoint cliente richiedono autenticazione con token cliente.
 
 #### GET /api/v1/customer/profile
 
-Retrieve current customer's driving profile.
+Recupera il profilo di guida del cliente corrente.
 
 #### POST /api/v1/customer/coach/chat
 
-Send message to AI Coach.
+Invia un messaggio all'AI Coach.
 
-**Request:**
+**Richiesta:**
 ```json
 {
-  "message": "How can I improve my driving score?",
+  "message": "Come posso migliorare il mio punteggio di guida?",
   "sessionId": "optional-session-id"
 }
 ```
 
-**Response:**
+**Risposta:**
 ```json
 {
   "success": true,
   "data": {
     "sessionId": "session-uuid",
-    "response": "Based on your profile, I recommend focusing on..."
+    "response": "In base al tuo profilo, ti consiglio di concentrarti su..."
   }
 }
 ```
 
 ---
 
-## Database Schema
+## Schema Database
 
-### Tables
+### Tabelle
 
 #### company_users
-Stores insurance company operator accounts.
+Memorizza gli account degli operatori assicurativi.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | UUID | Primary key |
-| auth_user_id | UUID | Supabase auth reference |
-| email | VARCHAR | User email |
-| full_name | VARCHAR | Display name |
-| created_at | TIMESTAMPTZ | Creation timestamp |
+| Colonna | Tipo | Descrizione |
+|---------|------|-------------|
+| id | UUID | Chiave primaria |
+| auth_user_id | UUID | Riferimento auth Supabase |
+| email | VARCHAR | Email utente |
+| full_name | VARCHAR | Nome visualizzato |
+| created_at | TIMESTAMPTZ | Timestamp creazione |
 
 #### customers
-Stores customer records.
+Memorizza i record dei clienti.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | UUID | Primary key |
-| auth_user_id | UUID | Supabase auth reference |
-| email | VARCHAR | Customer email |
-| full_name | VARCHAR | Customer name |
-| phone | VARCHAR | Phone number |
-| driver_license_number | VARCHAR | License number |
-| driver_license_years | INTEGER | Years holding license |
-| is_active | BOOLEAN | Soft delete flag |
-| created_at | TIMESTAMPTZ | Creation timestamp |
-| updated_at | TIMESTAMPTZ | Last update timestamp |
+| Colonna | Tipo | Descrizione |
+|---------|------|-------------|
+| id | UUID | Chiave primaria |
+| auth_user_id | UUID | Riferimento auth Supabase |
+| email | VARCHAR | Email cliente |
+| full_name | VARCHAR | Nome cliente |
+| phone | VARCHAR | Numero di telefono |
+| driver_license_number | VARCHAR | Numero patente |
+| driver_license_years | INTEGER | Anni di possesso patente |
+| is_active | BOOLEAN | Flag eliminazione soft |
+| created_at | TIMESTAMPTZ | Timestamp creazione |
+| updated_at | TIMESTAMPTZ | Timestamp ultimo aggiornamento |
 
 #### driver_profiles
-Stores calculated driving profiles.
+Memorizza i profili di guida calcolati.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | UUID | Primary key |
-| customer_id | UUID | Foreign key to customers |
-| overall_score | DECIMAL | Calculated overall score (0-100) |
-| overall_grade | VARCHAR | Letter grade (A-F) |
-| risk_level | VARCHAR | Risk classification |
-| premium_modifier | DECIMAL | Insurance premium multiplier |
-| competency_scores | JSONB | Scores by competency area |
-| recommendations | JSONB | Generated recommendations |
-| [14 parameter columns] | DECIMAL | Individual driving metrics |
-| created_at | TIMESTAMPTZ | Creation timestamp |
-| updated_at | TIMESTAMPTZ | Last update timestamp |
-
----
-
-## Scoring Algorithm
-
-### Competency Areas and Weights
-
-| Area | Weight | Parameters |
-|------|--------|------------|
-| Safety | 40% | Harsh braking, harsh acceleration, speeding violations, speeding magnitude |
-| Efficiency | 20% | Smooth acceleration, idling time, optimal gear usage, fuel efficiency |
-| Behavior | 25% | Night driving, weekend driving, phone usage, fatigue indicators |
-| Experience | 15% | Total mileage, years holding license, route variety |
-
-### Score Calculation
-
-1. Each parameter is scored 0-100 based on configured thresholds
-2. Area scores are calculated as weighted averages of their parameters
-3. Overall score is the weighted average of area scores
-4. Grade is assigned based on overall score thresholds
-
-### Grade and Risk Mapping
-
-| Score Range | Grade | Risk Level | Premium Modifier |
-|-------------|-------|------------|------------------|
-| 90-100 | A | Very Low | 0.80x (-20%) |
-| 80-89 | B | Low | 0.90x (-10%) |
-| 70-79 | C | Moderate | 1.00x (base) |
-| 60-69 | D | High | 1.25x (+25%) |
-| 0-59 | F | Very High | 1.50x (+50%) |
+| Colonna | Tipo | Descrizione |
+|---------|------|-------------|
+| id | UUID | Chiave primaria |
+| customer_id | UUID | Chiave esterna verso customers |
+| overall_score | DECIMAL | Punteggio complessivo calcolato (0-100) |
+| overall_grade | VARCHAR | Voto in lettere (A-F) |
+| risk_level | VARCHAR | Classificazione del rischio |
+| premium_modifier | DECIMAL | Moltiplicatore premio assicurativo |
+| competency_scores | JSONB | Punteggi per area di competenza |
+| recommendations | JSONB | Raccomandazioni generate |
+| [14 colonne parametri] | DECIMAL | Metriche di guida individuali |
+| created_at | TIMESTAMPTZ | Timestamp creazione |
+| updated_at | TIMESTAMPTZ | Timestamp ultimo aggiornamento |
 
 ---
 
-## Project Structure
+## Algoritmo di Scoring
+
+### Aree di Competenza e Pesi
+
+| Area | Peso | Parametri |
+|------|------|-----------|
+| Sicurezza | 40% | Frenate brusche, accelerazioni brusche, violazioni velocita, entita eccesso velocita |
+| Efficienza | 20% | Accelerazione fluida, tempo al minimo, uso ottimale marce, efficienza carburante |
+| Comportamento | 25% | Guida notturna, guida weekend, uso telefono, indicatori affaticamento |
+| Esperienza | 15% | Chilometraggio totale, anni di patente, varieta percorsi |
+
+### Calcolo del Punteggio
+
+1. Ogni parametro viene valutato 0-100 in base a soglie configurate
+2. I punteggi di area sono calcolati come medie ponderate dei loro parametri
+3. Il punteggio complessivo e la media ponderata dei punteggi di area
+4. Il voto viene assegnato in base alle soglie del punteggio complessivo
+
+### Mappatura Voti e Rischio
+
+| Range Punteggio | Voto | Livello Rischio | Modificatore Premio |
+|-----------------|------|-----------------|---------------------|
+| 90-100 | A | Molto Basso | 0.80x (-20%) |
+| 80-89 | B | Basso | 0.90x (-10%) |
+| 70-79 | C | Moderato | 1.00x (base) |
+| 60-69 | D | Alto | 1.25x (+25%) |
+| 0-59 | F | Molto Alto | 1.50x (+50%) |
+
+---
+
+## Struttura del Progetto
 
 ```
 DriveWell/
 ├── public/
-│   ├── login.html                 # Authentication page
+│   ├── login.html                 # Pagina autenticazione
 │   ├── js/
-│   │   └── auth.js               # Auth logic
+│   │   └── auth.js               # Logica autenticazione
 │   ├── company/
-│   │   ├── index.html            # Company dashboard
+│   │   ├── index.html            # Dashboard aziendale
 │   │   └── js/
 │   │       └── company-dashboard.js
 │   └── customer/
-│       ├── index.html            # Customer dashboard
+│       ├── index.html            # Dashboard cliente
 │       └── js/
 │           └── customer-dashboard.js
 │
 ├── src/
-│   ├── app.ts                    # Express application entry
+│   ├── app.ts                    # Entry point applicazione Express
 │   ├── config/
-│   │   ├── supabase.config.ts    # Supabase client setup
-│   │   ├── parameters.config.ts  # Driving parameter definitions
+│   │   ├── supabase.config.ts    # Setup client Supabase
+│   │   ├── parameters.config.ts  # Definizioni parametri guida
 │   │   ├── competency-areas.config.ts
 │   │   └── recommendations.config.ts
 │   ├── controllers/
@@ -468,8 +472,8 @@ DriveWell/
 │   │   ├── company.controller.ts
 │   │   └── customer.controller.ts
 │   ├── middleware/
-│   │   ├── auth.middleware.ts    # JWT verification
-│   │   ├── role.middleware.ts    # Role-based access
+│   │   ├── auth.middleware.ts    # Verifica JWT
+│   │   ├── role.middleware.ts    # Accesso basato su ruoli
 │   │   └── error-handler.middleware.ts
 │   ├── models/
 │   │   ├── driver-profile.model.ts
@@ -506,7 +510,7 @@ DriveWell/
 
 ## Deployment
 
-### Production Environment Variables
+### Variabili d'Ambiente di Produzione
 
 ```env
 NODE_ENV=production
@@ -518,29 +522,29 @@ OPENAI_API_KEY=sk-your-production-key
 CUSTOMER_REGISTRATION_CODE=YOUR-SECURE-CODE
 ```
 
-### Build and Run
+### Build e Avvio
 
 ```bash
 # Build TypeScript
 npm run build
 
-# Start production server
+# Avvia server di produzione
 npm start
 ```
 
-### Recommended Platforms
+### Piattaforme Consigliate
 
-- **Railway**: Simple deployment with environment variable management
-- **Render**: Native Node.js support with automatic builds
-- **Heroku**: Traditional PaaS with straightforward configuration
+- **Railway**: Deployment semplice con gestione variabili d'ambiente
+- **Render**: Supporto nativo Node.js con build automatiche
+- **Heroku**: PaaS tradizionale con configurazione diretta
 
-Note: Supabase handles database hosting separately from application hosting.
+Nota: Supabase gestisce l'hosting del database separatamente dall'hosting dell'applicazione.
 
 ---
 
-## License
+## Licenza
 
-ISC License
+Licenza ISC
 
 ---
 
